@@ -1,0 +1,44 @@
+.yourInfo__container {
+  width: 940px;
+  height: 600px;
+  background-color: var(--color-multi-step-background);
+  border-radius: 0.9375rem;
+  display: grid;
+  grid-template-columns: 274px 1fr;
+  gap: 6.25rem;
+  padding: 1rem;
+}
+
+.yourInfo__content {
+  background-color: var(--color-multi-step-background);
+}
+
+/* Responsive styles */
+
+@media (max-width: 768px) {
+  .yourInfo__container {
+    width: 100%;
+    height: auto;
+    position: relative;
+    border-radius: 10px;
+    display: grid;
+    top: -289px;
+  }
+
+  .yourInfo__sidebar-container {
+    position: absolute;
+    top: -50%;
+    left: 0;
+    width: 100%;
+  }
+
+  .yourInfo__content {
+    position: absolute;
+    top: 168px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 343px;
+    height: 375px;
+    border-radius: 10px;
+  }
+}

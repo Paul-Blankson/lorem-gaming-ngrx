@@ -1,1 +1,29 @@
-<p>your-info works!</p>
+<div class="yourInfo__container">
+  <div class="yourInfo__sidebar-container">
+    <app-sidebar [currentStep]="1"></app-sidebar>
+  </div>
+
+  <div class="yourInfo__content">
+    <h1>Personal Info</h1>
+    <p>Please provide your name, email address, and phone number.</p>
+
+    <form>
+      <div class="form-group">
+        <label for="name">Name</label>
+        <input type="text" id="name" placeholder="e.g. Stephen King" />
+      </div>
+      <div class="form-group">
+        <label for="email">Email Address</label>
+        <input
+          type="email"
+          id="email"
+          placeholder="e.g. stephenking@lorem.com"
+        />
+      </div>
+      <div class="form-group">
+        <label for="phone">Phone Number</label>
+        <input type="tel" id="phone" placeholder="e.g. +1 234 567 890" />
+      </div>
+    </form>
+  </div>
+</div>
