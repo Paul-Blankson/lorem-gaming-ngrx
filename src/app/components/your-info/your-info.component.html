@@ -4,26 +4,32 @@
   </div>
 
   <div class="yourInfo__content">
-    <h1>Personal Info</h1>
-    <p>Please provide your name, email address, and phone number.</p>
 
-    <form>
-      <div class="form-group">
-        <label for="name">Name</label>
-        <input type="text" id="name" placeholder="e.g. Stephen King" />
-      </div>
-      <div class="form-group">
-        <label for="email">Email Address</label>
+    <div class="yourInfo__text-container">
+      <h1 class="yourInfo__text">Personal Info</h1>
+      <p class="yourInfo__paragrah">Please provide your name, email address, and phone number.</p>
+    </div>
+
+    <form class="form__container" [formGroup]="yourInfoForm" (ngSubmit)="onSubmit()">
+      @for(field of fields; track $index) {
+      <div class="yourInfo__form-group" [class.error]="yourInfoForm.get(field.name)?.touched && yourInfoForm.get(field.name)?.invalid">
+        <label [for]="field.name">{{ field.label }}</label>
         <input
-          type="email"
-          id="email"
-          placeholder="e.g. stephenking@lorem.com"
+          [type]="field.type"
+          [id]="field.name"
+          [placeholder]="field.placeholder"
+          [formControlName]="field.name"
         />
+        @if(yourInfoForm.get(field.name)?.touched && yourInfoForm.get(field.name)?.invalid) {
+          <span class="error-message">
+            This field is required
+          </span>
+        }
       </div>
-      <div class="form-group">
-        <label for="phone">Phone Number</label>
-        <input type="tel" id="phone" placeholder="e.g. +1 234 567 890" />
-      </div>
+    }
+      <div class="button__container">
+        <app-custom-button></app-custom-button>
+    </div>
     </form>
   </div>
 </div>
