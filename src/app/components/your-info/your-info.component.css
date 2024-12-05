@@ -56,21 +56,6 @@
   position: relative;
 }
 
-.yourInfo__form-group.error input {
-  border: 1px solid #EE374A;
-}
-
-.error-message {
-  position: absolute;
-  top: 0;
-  right: 0;
-  font-family: Ubuntu;
-  font-size: 14px;
-  font-weight: 700;
-  line-height: 16.09px;
-  text-align: right;
-  color: #EE374A;
-}
 
 .yourInfo__form-group label {
   font-family: Ubuntu;
@@ -87,6 +72,31 @@
   border-radius: 0.5rem;
   border: 1px solid #D6D9E6;
   transition: border-color 0.3s ease;
+}
+
+.yourInfo__form-group.error input {
+  border: 1px solid #EE374A;
+}
+
+.yourInfo__form-group input::placeholder {
+  font-family: Ubuntu;
+  font-size: 1rem;
+  font-weight: 500;
+  line-height: 1.5625rem;
+  text-align: left;
+  color: #A3A3A3;
+}
+
+.error-message {
+  position: absolute;
+  top: 0;
+  right: 0;
+  font-family: Ubuntu;
+  font-size: 14px;
+  font-weight: 700;
+  line-height: 16.09px;
+  text-align: right;
+  color: #EE374A;
 }
 
 .yourInfo__form-group input:focus {
