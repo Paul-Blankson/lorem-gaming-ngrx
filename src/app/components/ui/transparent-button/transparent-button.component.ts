@@ -1,4 +1,4 @@
-import { Component, Input } from '@angular/core';
+import { Component } from '@angular/core';
 
 @Component({
   selector: 'app-transparent-button',
@@ -7,5 +7,5 @@ import { Component, Input } from '@angular/core';
   styleUrl: './transparent-button.component.css'
 })
 export class TransparentButtonComponent {
- @Input() isStep1: boolean = true;
+
 }
