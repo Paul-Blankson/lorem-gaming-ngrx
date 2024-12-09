@@ -2,12 +2,13 @@ import { Component } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
+import { FormDataService } from '../../service/form-data.service';
 
 @Component({
   selector: 'app-select-plan',
   imports: [SidebarComponent, FormsModule],
   templateUrl: './select-plan.component.html',
-  styleUrl: './select-plan.component.css'
+  styleUrl: './select-plan.component.css',
 })
 export class SelectPlanComponent {
   isYearly = false;
@@ -19,7 +20,14 @@ export class SelectPlanComponent {
     { name: 'Pro', price: '$15/mo', icon: 'images/icon-pro.svg' },
   ];
 
-  constructor(private router: Router) {}
+  constructor(
+    private router: Router,
+    private formDataService: FormDataService
+  ) {
+    const formData = this.formDataService.getFormData();
+    this.selectedPlan = formData.selectPlan.selectedPlan;
+    this.isYearly = formData.selectPlan.isYearly;
+  }
 
   togglePlan() {
     this.isYearly = !this.isYearly;
@@ -33,6 +41,10 @@ export class SelectPlanComponent {
   }
 
   nextStep(): void {
+    this.formDataService.setFormData('selectPlan', {
+      selectedPlan: this.selectedPlan,
+      isYearly: this.isYearly,
+    });
     this.router.navigate(['/sign-up/add-ons']);
   }
 }
