@@ -14,6 +14,7 @@ export class FormDataService {
       selectedPlan: 'Arcade',
       isYearly: false,
     },
+    addOns: []
   };
 
   getFormData(): any {
