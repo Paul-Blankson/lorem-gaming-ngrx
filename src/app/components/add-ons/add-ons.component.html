@@ -1,1 +1,39 @@
-<p>add-ons works!</p>
+<div class="add__ons-container">
+  <div class="sidebar__container">
+    <app-sidebar></app-sidebar>
+  </div>
+  <div class="add__ons-content">
+    <div class="addOns__text-container">
+      <h1 class="addOns__text">Pick add-ons</h1>
+      <p class="addOns__paragrah">
+        Add-ons help enhance your gaming experience.
+      </p>
+    </div>
+
+    <div class="add__ons-type">
+      @for(addOn of addOns; track $index){
+      <div class="add__on-item" (click)="toggleAddOn($index)">
+        <div class="add__ons-select-container">
+          <input
+            type="checkbox"
+            class="add__ons-checkbox"
+            [checked]="addOn.isSelected"
+            (click)="$event.stopPropagation()"
+          />
+          <div class="add__ons-text-container">
+            <h2 class="add__ons-text">{{ addOn.name }}</h2>
+            <p class="add__ons-paragrah">{{ addOn.description }}</p>
+          </div>
+        </div>
+        <p class="add__ons-price">{{ addOn.price }}</p>
+      </div>
+      }
+    </div>
+    <div class="button__container">
+      <button class="transparent__btn" (click)="goBack()">Go Back</button>
+      <button class="custom__btn" type="submit" (click)="nextStep()">
+        Next Step
+      </button>
+    </div>
+  </div>
+</div>
