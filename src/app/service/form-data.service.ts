@@ -15,11 +15,7 @@ export class FormDataService {
       price: 0,
       isYearly: false,
     },
-    addOns: {
-      name: '',
-      description: '',
-      price: 0
-    },
+    addOns: [],
   };
 
   getFormData(): any {
