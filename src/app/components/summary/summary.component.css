@@ -183,3 +183,9 @@
   line-height: 1.1487rem;
   text-align: center;
 }
+
+.confirm__btn:hover {
+  cursor: pointer;
+  background-color: #928CFF;
+  transition: background-color 0.3s ease;
+}
