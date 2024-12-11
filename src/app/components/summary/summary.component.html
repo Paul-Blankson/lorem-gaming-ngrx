@@ -1,1 +1,52 @@
-<p>summary works!</p>
+<div class="summary__container">
+  <div class="summary__sidebar-container">
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="summary__content">
+    <div class="summary__text-container">
+      <h1 class="summary__text">Finishing up</h1>
+      <p class="summary__paragrah">
+        Double-check everything looks OK before confirming.
+      </p>
+    </div>
+
+    <div class="summary__total-container">
+      <div class="summary__card">
+        <!-- Plan Details -->
+        <div class="summary__plan-container">
+          <div class="summary__plan-text-container">
+            <h2 class="summary__plan-text">
+              {{ formData.selectPlan.plan }}
+              ({{ formData.selectPlan.isYearly ? 'Yearly' : 'Monthly' }})
+            </h2>
+            <p class="summary__plan-paragrah">Change</p>
+          </div>
+          <h2 class="summary__plan-price">
+            ${{ formData.selectPlan.price }}/{{ formData.selectPlan.isYearly ? 'yr' : 'mo' }}
+          </h2>
+        </div>
+
+        <hr class="summary__card-line" />
+        @for(addOn of formData.addOns; track $index){
+        <div class="summary__card-add0n">
+          <p class="summary__card-add0n-text">{{ addOn.name }}</p>
+          ${{ addOn.price }}/{{ formData.selectPlan.isYearly ? 'yr' : 'mo' }}
+        </div>
+      }
+
+        <!-- Total -->
+      </div>
+      <div class="total__amount-container">
+        <p class="amount__lable">Total ({{ formData.selectPlan.isYearly ? 'per year' : 'per month' }})</p>
+        <h3 class="summary_amount">{{ totalPrice | currency: 'USD':'symbol':'1.0-1' }}</h3>
+      </div>
+
+    <div class="summary__button-container">
+      <button class="transparent__btn" (click)="goBack()">Go Back</button>
+      <button class="confirm__btn" type="submit" (click)="confirm()">
+        Confirm
+      </button>
+    </div>
+  </div>
+</div>
