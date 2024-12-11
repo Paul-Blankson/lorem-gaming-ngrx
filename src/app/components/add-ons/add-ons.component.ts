@@ -72,6 +72,5 @@ export class AddOnsComponent implements OnInit {
   nextStep(): void {
     this.updateFormData();
     this.router.navigate(['/sign-up/summary']);
-    console.log(this.formDataService.getFormData());
   }
 }
