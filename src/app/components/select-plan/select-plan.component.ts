@@ -69,6 +69,5 @@ export class SelectPlanComponent implements OnInit {
     if (this.selectedPlan) {
       this.router.navigate(['/sign-up/add-ons']);
     }
-    console.log(this.formDataService.getFormData());
   }
 }
