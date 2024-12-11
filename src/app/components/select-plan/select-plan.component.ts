@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
+import { CurrencyPipe } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
@@ -6,45 +7,68 @@ import { FormDataService } from '../../service/form-data.service';
 
 @Component({
   selector: 'app-select-plan',
-  imports: [SidebarComponent, FormsModule],
+  imports: [SidebarComponent, FormsModule, CurrencyPipe],
   templateUrl: './select-plan.component.html',
-  styleUrl: './select-plan.component.css',
+  styleUrls: ['./select-plan.component.css'],
 })
-export class SelectPlanComponent {
+export class SelectPlanComponent implements OnInit {
   isYearly = false;
-  selectedPlan = 'Arcade';
+  selectedPlan = '';
 
   plans = [
-    { name: 'Arcade', price: '$9/mo', icon: 'images/icon-arcade.svg' },
-    { name: 'Advanced', price: '$12/mo', icon: 'images/icon-advanced.svg' },
-    { name: 'Pro', price: '$15/mo', icon: 'images/icon-pro.svg' },
+    { name: 'Arcade', monthlyPrice: 9, yearlyPrice: 90, icon: 'images/icon-arcade.svg' },
+    { name: 'Advanced', monthlyPrice: 12, yearlyPrice: 120, icon: 'images/icon-advanced.svg' },
+    { name: 'Pro', monthlyPrice: 15, yearlyPrice: 150, icon: 'images/icon-pro.svg' },
   ];
 
   constructor(
     private router: Router,
     private formDataService: FormDataService
-  ) {
-    const formData = this.formDataService.getFormData();
-    this.selectedPlan = formData.selectPlan.selectedPlan;
-    this.isYearly = formData.selectPlan.isYearly;
+  ) {}
+
+  ngOnInit(): void {
+    const existingFormData = this.formDataService.getFormData();
+
+    if (existingFormData.selectPlan && existingFormData.selectPlan.plan) {
+      this.selectedPlan = existingFormData.selectPlan.plan;
+      this.isYearly = existingFormData.selectPlan.isYearly;
+    } else {
+      this.selectedPlan = this.plans[0].name;
+    }
+
+    this.updateFormData();
   }
 
-  togglePlan() {
+  togglePlan(): void {
     this.isYearly = !this.isYearly;
+    this.updateFormData();
   }
 
-  selectPlan(plan: string) {
+  selectPlan(plan: string): void {
     this.selectedPlan = plan;
+    this.updateFormData();
   }
+
+  updateFormData(): void {
+    const selectedPlanObj = this.plans.find(plan => plan.name === this.selectedPlan);
+
+    if (selectedPlanObj) {
+      this.formDataService.setFormData('selectPlan', {
+        plan: this.selectedPlan,
+        price: this.isYearly ? selectedPlanObj.yearlyPrice : selectedPlanObj.monthlyPrice,
+        isYearly: this.isYearly
+      });
+    }
+  }
+
   goBack(): void {
     this.router.navigate(['/sign-up/your-info']);
   }
 
   nextStep(): void {
-    this.formDataService.setFormData('selectPlan', {
-      selectedPlan: this.selectedPlan,
-      isYearly: this.isYearly,
-    });
-    this.router.navigate(['/sign-up/add-ons']);
+    if (this.selectedPlan) {
+      this.router.navigate(['/sign-up/add-ons']);
+    }
+    console.log(this.formDataService.getFormData());
   }
 }
