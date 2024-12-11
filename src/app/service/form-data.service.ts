@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 
 @Injectable({
-  providedIn: 'root'
+  providedIn: 'root',
 })
 export class FormDataService {
   private formData: any = {
@@ -11,10 +11,11 @@ export class FormDataService {
       phone: '',
     },
     selectPlan: {
-      selectedPlan: 'Arcade',
+      plan: '',
+      price: 0,
       isYearly: false,
     },
-    addOns: []
+    addOns: [],
   };
 
   getFormData(): any {
