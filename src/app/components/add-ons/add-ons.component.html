@@ -25,7 +25,7 @@
             <p class="add__ons-paragrah">{{ addOn.description }}</p>
           </div>
         </div>
-        <p class="add__ons-price">{{ addOn.price }}</p>
+        <p class="add__ons-price">{{ isYearly ? (addOn.yearlyPrice | currency:'USD':'symbol':'1.0-1') + '/yr' : (addOn.monthlyPrice | currency:'USD':'symbol':'1.0-1') + '/mo' }}</p>
       </div>
       }
     </div>
