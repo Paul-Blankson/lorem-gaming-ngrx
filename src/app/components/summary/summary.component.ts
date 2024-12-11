@@ -32,8 +32,12 @@ export class SummaryComponent implements OnInit {
     this.totalPrice = basePrice + addOnsPrice;
   }
 
-  goBack(): void {
+  onSelectPlanChange(){
     this.router.navigate(['/sign-up/select-plan']);
+  }
+
+  goBack(): void {
+    this.router.navigate(['/sign-up/add-ons']);
   }
 
   confirm(): void {

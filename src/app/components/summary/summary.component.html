@@ -20,7 +20,7 @@
               {{ formData.selectPlan.plan }}
               ({{ formData.selectPlan.isYearly ? 'Yearly' : 'Monthly' }})
             </h2>
-            <p class="summary__plan-paragrah">Change</p>
+            <a (click)="onSelectPlanChange()" class="summary__plan-paragrah">Change</a>
           </div>
           <h2 class="summary__plan-price">
             ${{ formData.selectPlan.price }}/{{ formData.selectPlan.isYearly ? 'yr' : 'mo' }}
