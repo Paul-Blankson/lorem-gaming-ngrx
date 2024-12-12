@@ -189,3 +189,77 @@
   background-color: #928CFF;
   transition: background-color 0.3s ease;
 }
+
+@media (max-width: 768px) {
+  .summary__container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: var(--color-background);
+    padding: 0;
+  }
+
+  .summary__content {
+    width: 90%;
+    height: auto;
+    background-color: var(--color-multi-step-background);
+    border-radius: 10px;
+    margin-top: -90px;
+    padding: 20px;
+    margin-left: 5%;
+  }
+
+  .summary__text {
+    font-size: 1.5rem;
+    line-height: 27.58px;
+    text-align: left;
+  }
+
+  .summary__paragrah {
+    font-size: 1rem;
+    line-height: 25px;
+    text-align: left;
+    color: var(--color-grey);
+  }
+
+  .summary__total-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    gap: 24px;
+  }
+
+  .total__amount-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+  }
+
+  .summary__button-container{
+    width: 100vw;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: var(--color-multi-step-background);
+  }
+
+  .transparent__btn{
+    position: absolute;
+    left: 1rem;
+  }
+  .confirm__btn {
+    position: absolute;
+    right: 1rem;
+  }
+
+}

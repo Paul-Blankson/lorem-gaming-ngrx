@@ -138,3 +138,96 @@
   display: flex;
   justify-content: space-between;
 }
+
+@media (max-width: 768px) {
+  .add__ons-container {
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    background-color: var(--color-background);
+    padding: 0;
+  }
+
+  .sidebar__container {
+    width: 100%;
+    height: 172px;
+  }
+
+  .add__ons-content {
+    width: 90%;
+    height: 70vh;
+    background-color: var(--color-multi-step-background);
+    border-radius: 10px;
+    margin-top: -90px;
+    padding: 20px;
+    margin-left: 5%;
+  }
+
+  .addOns__text-container {
+    gap: 0.25rem;
+  }
+
+  .addOns__text {
+    font-size: 1.5rem;
+    line-height: 1.7237rem;
+  }
+
+  .addOns__paragrah {
+    font-size: 1rem;
+    line-height: 1.5625rem;
+  }
+
+  .add__ons-type {
+    width: 100%;
+    height: auto;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    gap: 1rem;
+  }
+
+  .add__ons-text {
+    white-space: nowrap;
+  }
+
+  .add__ons-item {
+    width: 100%;
+  }
+
+  .button__container {
+    width: 100vw;
+    height: 4rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    left: 0;
+    bottom: 0;
+    background-color: var(--color-multi-step-background);
+  }
+
+  .transparent__btn{
+    position: absolute;
+    left: 1rem;
+  }
+
+  .custom__btn {
+    border-radius: 8px;
+    padding: 14px 24px 16px 25px;
+    border: none;
+    background-color: var(--color-denim);
+    color: var(--color-multi-step-background);
+    font-family: Ubuntu;
+    font-size: 1rem;
+    font-weight: 500;
+    line-height: 1.1487rem;
+    text-align: left;
+    cursor: pointer;
+    position: absolute;
+    right: 1rem;
+  }
+
+}

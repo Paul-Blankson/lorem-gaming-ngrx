@@ -18,6 +18,7 @@
           (click)="selectPlan(plan.name)"
           (keydown.enter)="selectPlan(plan.name)"
         >
+        <div class="card-details">
           <img [src]="plan.icon" [alt]="plan.name + ' icon'" class="card__icon" />
           <div class="plan__text-container">
             <h2 class="card__heading">{{ plan.name }}</h2>
@@ -26,6 +27,7 @@
             </p>
             <p class="card__discount" [class.visible]="isYearly">2 months free</p>
           </div>
+        </div>
         </div>
       }
     </div>
