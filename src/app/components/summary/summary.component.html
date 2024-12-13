@@ -3,6 +3,19 @@
     <app-sidebar></app-sidebar>
   </div>
 
+  @if(isConfirmed) {
+    <div class="thank-you__content">
+      <div>
+        <img src="images/icon-thank-you.svg" class="thank-you__icon" alt="Thank You Icon" />
+      </div>
+      <h1 class="thank-you__title">Thank you!</h1>
+      <p class="thank-you__message">
+        Thanks for confirming your subscription! We hope you have fun using our
+        platform. If you ever need support, please feel free to email us at support&#64;loremgaming.com.
+      </p>
+    </div>
+  }
+@else {
   <div class="summary__content">
     <div class="summary__text-container">
       <h1 class="summary__text">Finishing up</h1>
@@ -13,17 +26,21 @@
 
     <div class="summary__total-container">
       <div class="summary__card">
-        <!-- Plan Details -->
+
         <div class="summary__plan-container">
           <div class="summary__plan-text-container">
             <h2 class="summary__plan-text">
               {{ formData.selectPlan.plan }}
-              ({{ formData.selectPlan.isYearly ? 'Yearly' : 'Monthly' }})
+              ({{ formData.selectPlan.isYearly ? "Yearly" : "Monthly" }})
             </h2>
-            <a (click)="onSelectPlanChange()" class="summary__plan-paragrah">Change</a>
+            <a (click)="onSelectPlanChange()" class="summary__plan-paragrah"
+              >Change</a
+            >
           </div>
           <h2 class="summary__plan-price">
-            ${{ formData.selectPlan.price }}/{{ formData.selectPlan.isYearly ? 'yr' : 'mo' }}
+            ${{ formData.selectPlan.price }}/{{
+              formData.selectPlan.isYearly ? "yr" : "mo"
+            }}
           </h2>
         </div>
 
@@ -31,22 +48,27 @@
         @for(addOn of formData.addOns; track $index){
         <div class="summary__card-add0n">
           <p class="summary__card-add0n-text">{{ addOn.name }}</p>
-          ${{ addOn.price }}/{{ formData.selectPlan.isYearly ? 'yr' : 'mo' }}
+          ${{ addOn.price }}/{{ formData.selectPlan.isYearly ? "yr" : "mo" }}
         </div>
-      }
+        }
 
-        <!-- Total -->
       </div>
       <div class="total__amount-container">
-        <p class="amount__lable">Total ({{ formData.selectPlan.isYearly ? 'per year' : 'per month' }})</p>
-        <h3 class="summary_amount">{{ totalPrice | currency: 'USD':'symbol':'1.0-1' }}</h3>
+        <p class="amount__lable">
+          Total ({{ formData.selectPlan.isYearly ? "per year" : "per month" }})
+        </p>
+        <h3 class="summary_amount">
+          {{ totalPrice | currency : "USD" : "symbol" : "1.0-1" }}
+        </h3>
       </div>
 
-    <div class="summary__button-container">
-      <button class="transparent__btn" (click)="goBack()">Go Back</button>
-      <button class="confirm__btn" type="submit" (click)="confirm()">
-        Confirm
-      </button>
+      <div class="summary__button-container">
+        <button class="transparent__btn" (click)="goBack()">Go Back</button>
+        <button class="confirm__btn" type="submit" (click)="confirm()">
+          Confirm
+        </button>
+      </div>
     </div>
   </div>
-</div>
+}
+  </div>
