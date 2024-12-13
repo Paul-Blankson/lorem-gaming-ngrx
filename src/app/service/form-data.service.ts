@@ -1,10 +1,11 @@
 import { Injectable } from '@angular/core';
+import { FormData } from '../models';
 
 @Injectable({
   providedIn: 'root',
 })
 export class FormDataService {
-  private formData: any = {
+  private formData: FormData = {
     yourInfo: {
       name: '',
       email: '',
@@ -33,11 +34,11 @@ export class FormDataService {
     }
   }
 
-  getFormData(): any {
+  getFormData(): FormData {
     return this.formData;
   }
 
-  setFormData(step: string, data: any): void {
+  setFormData<K extends keyof FormData>(step: K, data: FormData[K]): void {
     this.formData[step] = data;
     this.saveFormDataToLocalStorage();
   }
