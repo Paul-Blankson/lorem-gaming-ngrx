@@ -1,4 +1,4 @@
-import { Component, inject, Input } from '@angular/core';
+import { Component, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { Step } from '../../models';
 
@@ -9,7 +9,6 @@ import { Step } from '../../models';
   styleUrl: './sidebar.component.css'
 })
 export class SidebarComponent {
-  @Input() currentStep: number = 1;
   router: Router = inject(Router);
 
   steps: Step[] = [
