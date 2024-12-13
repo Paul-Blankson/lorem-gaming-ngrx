@@ -12,17 +12,24 @@
 
     <div class="select__plan-type">
       @for(plan of plans; track $index) {
-      <div class="select__plan-card"
-        [class.selected]="selectedPlan === plan.name"
-        (click)="selectPlan(plan.name)"
-      >
-      <img [src]="plan.icon" [alt]="plan.name + ' icon'" class="card__icon" />
-      <div class="plan__text-container">
-        <h2 class="card__heading">{{ plan.name }}</h2>
-        <p class="card__price">{{ plan.price }}</p>
-      </div>
-      </div>
-    }
+        <div
+          class="select__plan-card"
+          [class.selected]="selectedPlan === plan.name"
+          (click)="selectPlan(plan.name)"
+          (keydown.enter)="selectPlan(plan.name)"
+        >
+        <div class="card-details">
+          <img [src]="plan.icon" [alt]="plan.name + ' icon'" class="card__icon" />
+          <div class="plan__text-container">
+            <h2 class="card__heading">{{ plan.name }}</h2>
+            <p class="card__price">
+              {{ isYearly ? (plan.yearlyPrice | currency:'USD':'symbol':'1.0-1') + '/yr' : (plan.monthlyPrice | currency:'USD':'symbol':'1.0-1') + '/mo' }}
+            </p>
+            <p class="card__discount" [class.visible]="isYearly">2 months free</p>
+          </div>
+        </div>
+        </div>
+      }
     </div>
 
     <div class="select__plan-toggle-buttons-container">
@@ -38,7 +45,6 @@
             type="checkbox"
             id="toggle"
             class="select__plan-checkbox"
-            [(ngModel)]="isYearly"
             (change)="togglePlan()"
           />
           <label
