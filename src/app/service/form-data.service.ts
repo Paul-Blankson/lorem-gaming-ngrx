@@ -58,4 +58,12 @@ export class FormDataService {
     };
     localStorage.removeItem('formData');
   }
+  isFormDataEmpty(): boolean {
+    return (
+      !this.formData.yourInfo.name &&
+      !this.formData.yourInfo.email &&
+      !this.formData.yourInfo.phone &&
+      !this.formData.selectPlan.plan
+    );
+  }
 }
