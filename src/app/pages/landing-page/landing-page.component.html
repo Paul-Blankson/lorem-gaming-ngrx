@@ -1,34 +1,37 @@
-<div class="landing-page">
-  <header class="landing-page__header">
-    <div class="landing-page__logo">Lorem Gaming</div>
+<div class="container">
+  <header>
+      <div class="logo">Lorem Gaming</div>
+      <nav>
+          <a href="#">Home</a>
+          <a href="#">Features</a>
+          <a href="#">Pricing</a>
+          <a href="#">Support</a>
+      </nav>
   </header>
 
-  <main class="landing-page__content">
-    <section class="landing-page__hero">
-      <h1 class="landing-page__hero-heading">Next-Level Gaming Experience</h1>
-      <p class="landing-page__hero-text">Unlock Unlimited Gaming Across All Devices</p>
-
-      <div class="landing-page__features">
-        <h2 class="landing-page__feature-heading">What You Get:</h2>
-        <ul class="landing-page__features-list">
-          @for(feature of gamingFeatures; track feature) {
-            <li>
-              {{ feature }}
-            </li>
-          }
-        </ul>
+  <section class="hero">
+      <div class="hero-content">
+          <h1>Next Level Gaming Experience</h1>
+          <p class="subtext">Unlock unlimited access to premium games, exclusive content, and seamless online multiplayer with Lorem Gaming's latest subscription service.</p>
+          <a [routerLink]="['/sign-up']" class="cta-button">Get Started</a>
       </div>
+  </section>
 
-      <div class="landing-page__cta-section">
-        <a [routerLink]="['/sign-up']" class="landing-page__cta-button">
-          Start Your Gaming Journey
-        </a>
+  <section class="features">
+      <div class="feature">
+          <img src="/api/placeholder/80/80" alt="Multiplayer Icon">
+          <h3>Multiplayer</h3>
+          <p>Connect with gamers worldwide and enjoy seamless online multiplayer experiences.</p>
       </div>
-    </section>
-  </main>
-
-  <footer class="landing-page__footer">
-    <p class="landing-page__footer-text">© 2024 Lorem Gaming. All Rights Reserved.</p>
-  </footer>
+      <div class="feature">
+          <img src="/api/placeholder/80/80" alt="Game Library Icon">
+          <h3>Extensive Library</h3>
+          <p>Access hundreds of games across multiple genres and platforms.</p>
+      </div>
+      <div class="feature">
+          <img src="/api/placeholder/80/80" alt="Exclusive Content Icon">
+          <h3>Exclusive Content</h3>
+          <p>Get early access and special in-game content available only to Lorem Gaming subscribers.</p>
+      </div>
+  </section>
 </div>
-

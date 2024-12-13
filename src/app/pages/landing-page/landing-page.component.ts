@@ -8,11 +8,5 @@ import { RouterModule } from '@angular/router';
   styleUrl: './landing-page.component.css'
 })
 export class LandingPageComponent {
-  gamingFeatures = [
-    'Unlimited Game Access',
-    'Cloud Gaming',
-    'Exclusive Community',
-    '4K Streaming',
-    'Multi-Device Support'
-  ];
+  
 }
