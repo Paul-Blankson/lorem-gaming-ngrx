@@ -12,6 +12,7 @@ import { CurrencyPipe } from '@angular/common';
 export class SummaryComponent implements OnInit {
   formData: any = {};
   totalPrice: number = 0;
+  isConfirmed: boolean = false;
 
   constructor(
     private router: Router,
@@ -41,6 +42,10 @@ export class SummaryComponent implements OnInit {
   }
 
   confirm(): void {
-    console.log('Confirmation complete:', this.formData);
+    this.isConfirmed = true;
+    this.formDataService.clearFormData();
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 3000);
   }
 }

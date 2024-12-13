@@ -15,7 +15,6 @@
   align-items: center;
   gap: 1rem;
   margin-bottom: 2rem;
-  /* cursor: pointer; */
 }
 
 .step.active .step-number {
@@ -51,6 +50,7 @@
   font-size: 14px;
   color: var(--color-multi-step-background);
   white-space: nowrap;
+  cursor: pointer;
 }
 
 @media (max-width: 768px) {

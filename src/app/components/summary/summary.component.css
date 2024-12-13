@@ -190,6 +190,40 @@
   transition: background-color 0.3s ease;
 }
 
+.thank-you__content {
+  background-color: var(--color-multi-step-background);
+  width: 450px;
+  height: 238px;
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  justify-content: center;
+  align-items: center;
+  margin: auto 0;
+}
+
+.thank-you__icon {
+  width: 80px;
+  height: 80px;
+}
+
+.thank-you__title {
+  font-size: 2rem;
+  line-height: 36.77px;
+  font-weight: 700;
+  text-align: center;
+  color: var(--color-demin);
+}
+
+.thank-you__message {
+  font-weight: 400;
+  font-size: 1rem;
+  line-height: 25px;
+  text-align: center;
+  color: var(--color-grey);
+}
+
+
 @media (max-width: 768px) {
   .summary__container {
     width: 100%;
@@ -260,6 +294,26 @@
   .confirm__btn {
     position: absolute;
     right: 1rem;
+  }
+
+  .thank-you__content {
+    width: 343px;
+    height: 400px;
+    border-radius: 10px;
+    margin-top: -90px;
+    padding: 20px;
+    margin-left: 5%;
+  }
+
+  .thank-you__icon {
+    width: 56px;
+    height: 56px;
+  }
+
+  .thank-you__title {
+    font-size: 1.5rem;
+    line-height: 27.58px;
+    text-align: center;
   }
 
 }

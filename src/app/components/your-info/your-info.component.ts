@@ -1,4 +1,4 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import {
   FormBuilder,
@@ -16,7 +16,7 @@ import { FormDataService } from '../../service/form-data.service';
   templateUrl: './your-info.component.html',
   styleUrl: './your-info.component.css',
 })
-export class YourInfoComponent {
+export class YourInfoComponent implements OnInit {
   yourInfoForm: FormGroup;
   fields = [
     {
@@ -53,6 +53,14 @@ export class YourInfoComponent {
     });
 
     this.yourInfoForm = this.fb.group(formControls);
+  }
+
+  ngOnInit(): void {
+    // Pre-fill form with existing data
+    const existingFormData = this.formDataService.getFormData();
+    if (existingFormData.yourInfo) {
+      this.yourInfoForm.patchValue(existingFormData.yourInfo);
+    }
   }
 
   nextStep() {

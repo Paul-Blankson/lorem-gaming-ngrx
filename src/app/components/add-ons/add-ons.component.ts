@@ -43,9 +43,12 @@ export class AddOnsComponent implements OnInit {
     this.isYearly = existingFormData.selectPlan.isYearly;
 
     if (existingFormData.addOns && existingFormData.addOns.length) {
+      // Restore selected add-ons
       this.addOns = this.addOns.map(addOn => {
         const savedAddOn = existingFormData.addOns.find((saved: any) => saved.name === addOn.name);
-        return savedAddOn ? { ...addOn, isSelected: savedAddOn.isSelected } : addOn;
+        return savedAddOn
+          ? { ...addOn, isSelected: true }
+          : addOn;
       });
     }
   }
@@ -56,11 +59,13 @@ export class AddOnsComponent implements OnInit {
   }
 
   updateFormData(): void {
-    const selectedAddOns = this.addOns.map(addOn => ({
-      name: addOn.name,
-      description: addOn.description,
-      price: this.isYearly ? addOn.yearlyPrice : addOn.monthlyPrice
-    }));
+    const selectedAddOns = this.addOns
+      .filter(addOn => addOn.isSelected)
+      .map(addOn => ({
+        name: addOn.name,
+        description: addOn.description,
+        price: this.isYearly ? addOn.yearlyPrice : addOn.monthlyPrice
+      }));
 
     this.formDataService.setFormData('addOns', selectedAddOns);
   }
