@@ -1,37 +1,42 @@
 <div class="container">
   <header>
-      <div class="logo">Lorem Gaming</div>
-      <nav>
-          <a href="#">Home</a>
-          <a href="#">Features</a>
-          <a href="#">Pricing</a>
-          <a href="#">Support</a>
-      </nav>
+    <div class="logo">Lorem Gaming</div>
+    <nav [class.active]="isMenuOpen">
+      <a href="#">Home</a>
+      <a href="#">Features</a>
+      <a href="#">Pricing</a>
+      <a href="#">Support</a>
+    </nav>
+    <button class="hamburger" (click)="toggleMenu()" [class.active]="isMenuOpen">
+      <span></span>
+      <span></span>
+      <span></span>
+    </button>
   </header>
 
   <section class="hero">
-      <div class="hero-content">
-          <h1>Next Level Gaming Experience</h1>
-          <p class="subtext">Unlock unlimited access to premium games, exclusive content, and seamless online multiplayer with Lorem Gaming's latest subscription service.</p>
-          <a [routerLink]="['/sign-up']" class="cta-button">Get Started</a>
-      </div>
+    <div class="hero-content">
+      <h1>Next Level Gaming Experience</h1>
+      <p class="subtext">Unlock unlimited access to premium games, exclusive content, and seamless online multiplayer with Lorem Gaming's latest subscription service.</p>
+      <a [routerLink]="['/sign-up']" class="cta-button">Get Started</a>
+    </div>
   </section>
 
   <section class="features">
-      <div class="feature">
-          <img src="/api/placeholder/80/80" alt="Multiplayer Icon">
-          <h3>Multiplayer</h3>
-          <p>Connect with gamers worldwide and enjoy seamless online multiplayer experiences.</p>
-      </div>
-      <div class="feature">
-          <img src="/api/placeholder/80/80" alt="Game Library Icon">
-          <h3>Extensive Library</h3>
-          <p>Access hundreds of games across multiple genres and platforms.</p>
-      </div>
-      <div class="feature">
-          <img src="/api/placeholder/80/80" alt="Exclusive Content Icon">
-          <h3>Exclusive Content</h3>
-          <p>Get early access and special in-game content available only to Lorem Gaming subscribers.</p>
-      </div>
+    <div class="feature">
+      <img src="/api/placeholder/80/80" alt="Multiplayer Icon">
+      <h3>Multiplayer</h3>
+      <p>Connect with gamers worldwide and enjoy seamless online multiplayer experiences.</p>
+    </div>
+    <div class="feature">
+      <img src="/api/placeholder/80/80" alt="Game Library Icon">
+      <h3>Extensive Library</h3>
+      <p>Access hundreds of games across multiple genres and platforms.</p>
+    </div>
+    <div class="feature">
+      <img src="/api/placeholder/80/80" alt="Exclusive Content Icon">
+      <h3>Exclusive Content</h3>
+      <p>Get early access and special in-game content available only to Lorem Gaming subscribers.</p>
+    </div>
   </section>
 </div>

@@ -8,5 +8,9 @@ import { RouterModule } from '@angular/router';
   styleUrl: './landing-page.component.css'
 })
 export class LandingPageComponent {
-  
+  isMenuOpen = false;
+
+  toggleMenu(): void {
+    this.isMenuOpen = !this.isMenuOpen;
+  }
 }
