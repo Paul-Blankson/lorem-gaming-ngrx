@@ -1,1 +1,65 @@
-<p>select-plan works!</p>
+<div class="select__plan-container">
+  <div class="sidebar__container">
+    <app-sidebar></app-sidebar>
+  </div>
+
+  <div class="select__plan-content">
+
+    <div class="selectPlan__text-container">
+      <h1 class="selectPlan__text">Select your plan</h1>
+      <p class="selectPlan__paragrah">You have the option of monthly or yearly billing.</p>
+    </div>
+
+    <div class="select__plan-type">
+      @for(plan of plans; track $index) {
+      <div class="select__plan-card"
+        [class.selected]="selectedPlan === plan.name"
+        (click)="selectPlan(plan.name)"
+      >
+      <img [src]="plan.icon" [alt]="plan.name + ' icon'" class="card__icon" />
+      <div class="plan__text-container">
+        <h2 class="card__heading">{{ plan.name }}</h2>
+        <p class="card__price">{{ plan.price }}</p>
+      </div>
+      </div>
+    }
+    </div>
+
+    <div class="select__plan-toggle-buttons-container">
+      <div class="select__plan-buttons-container">
+        <h3
+          class="select__plan-text"
+          [class.selected]="!isYearly"
+        >
+          Monthly
+        </h3>
+        <div class="select__plan-toggle-button">
+          <input
+            type="checkbox"
+            id="toggle"
+            class="select__plan-checkbox"
+            [(ngModel)]="isYearly"
+            (change)="togglePlan()"
+          />
+          <label
+            class="select__plan-button"
+            for="toggle"
+            aria-label="Toggle yearly plan"
+          ></label>
+        </div>
+        <h3
+          class="select__plan-text"
+          [class.selected]="isYearly"
+        >
+          Yearly
+        </h3>
+      </div>
+    </div>
+    <div class="button__container">
+      <button class="transparent__btn" (click)="goBack()">Go Back</button>
+      <button class="custom__btn" type="submit"(click)="nextStep()">Next Step</button>
+  </div>
+
+  </div>
+
+</div>

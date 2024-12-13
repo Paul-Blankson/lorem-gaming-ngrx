@@ -1,6 +1,6 @@
 <div class="yourInfo__container">
   <div class="yourInfo__sidebar-container">
-    <app-sidebar [currentStep]="1"></app-sidebar>
+    <app-sidebar></app-sidebar>
   </div>
 
   <div class="yourInfo__content">
@@ -28,7 +28,7 @@
       </div>
     }
       <div class="button__container">
-        <app-custom-button></app-custom-button>
+        <button class="custom__btn" type="submit" (click)="nextStep()">Next Step</button>
     </div>
     </form>
   </div>
