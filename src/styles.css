@@ -1,1 +1,45 @@
-/* You can add global styles to this file, and also import other style files */
+:root {
+  --color-background: #EFF5FF;
+  --color-multi-step-background: white;
+  --color-denim: #022959;
+  --color-grey: #9699AA;
+  --color-sky-blue: #BEE2FD;
+  --color-deep-blue: #483EFF;
+  --color-text-blue: #ABBCFF;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../public/fonts/Ubuntu-Regular.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../public/fonts/Ubuntu-Medium.ttf') format('truetype');
+  font-weight: 500;
+  font-style: normal;
+}
+
+@font-face {
+  font-family: 'Ubuntu';
+  src: url('../public/fonts/Ubuntu-Bold.ttf') format('truetype');
+  font-weight: bold;
+  font-style: normal;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: 'Ubuntu', Arial, sans-serif;
+  background-color: var(--color-background);
+  height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}

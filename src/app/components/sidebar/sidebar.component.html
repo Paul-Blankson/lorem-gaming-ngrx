@@ -1,0 +1,13 @@
+<div class="sidebar">
+  <div class="steps__container">
+    @for(step of steps; track step) {
+    <div class="step" [class.active]="isActive(step.route)" (click)="navigateToStep(step)">
+      <div class="step-number">{{ step.number }}</div>
+      <div class="step__lable-container">
+        <span class="step__lable-count">STEP {{ step.number }}</span>
+        <h2 class="step__label-text">{{ step.label }}</h2>
+      </div>
+    </div>
+  }
+  </div>
+</div>
