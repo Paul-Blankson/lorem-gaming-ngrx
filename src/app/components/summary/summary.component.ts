@@ -42,7 +42,10 @@ export class SummaryComponent implements OnInit {
   }
 
   confirm(): void {
-    console.log('Confirmation complete:', this.formData);
     this.isConfirmed = true;
+    this.formDataService.clearFormData();
+    setTimeout(() => {
+      this.router.navigate(['/']);
+    }, 3000);
   }
 }

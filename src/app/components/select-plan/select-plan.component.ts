@@ -16,9 +16,24 @@ export class SelectPlanComponent implements OnInit {
   selectedPlan = '';
 
   plans = [
-    { name: 'Arcade', monthlyPrice: 9, yearlyPrice: 90, icon: 'images/icon-arcade.svg' },
-    { name: 'Advanced', monthlyPrice: 12, yearlyPrice: 120, icon: 'images/icon-advanced.svg' },
-    { name: 'Pro', monthlyPrice: 15, yearlyPrice: 150, icon: 'images/icon-pro.svg' },
+    {
+      name: 'Arcade',
+      monthlyPrice: 9,
+      yearlyPrice: 90,
+      icon: 'images/icon-arcade.svg',
+    },
+    {
+      name: 'Advanced',
+      monthlyPrice: 12,
+      yearlyPrice: 120,
+      icon: 'images/icon-advanced.svg',
+    },
+    {
+      name: 'Pro',
+      monthlyPrice: 15,
+      yearlyPrice: 150,
+      icon: 'images/icon-pro.svg',
+    },
   ];
 
   constructor(
@@ -33,6 +48,7 @@ export class SelectPlanComponent implements OnInit {
       this.selectedPlan = existingFormData.selectPlan.plan;
       this.isYearly = existingFormData.selectPlan.isYearly;
     } else {
+      // Default to first plan if no existing data
       this.selectedPlan = this.plans[0].name;
     }
 
@@ -50,13 +66,17 @@ export class SelectPlanComponent implements OnInit {
   }
 
   updateFormData(): void {
-    const selectedPlanObj = this.plans.find(plan => plan.name === this.selectedPlan);
+    const selectedPlanObj = this.plans.find(
+      (plan) => plan.name === this.selectedPlan
+    );
 
     if (selectedPlanObj) {
       this.formDataService.setFormData('selectPlan', {
         plan: this.selectedPlan,
-        price: this.isYearly ? selectedPlanObj.yearlyPrice : selectedPlanObj.monthlyPrice,
-        isYearly: this.isYearly
+        price: this.isYearly
+          ? selectedPlanObj.yearlyPrice
+          : selectedPlanObj.monthlyPrice,
+        isYearly: this.isYearly,
       });
     }
   }
