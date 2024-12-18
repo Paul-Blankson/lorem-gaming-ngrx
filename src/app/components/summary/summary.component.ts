@@ -15,8 +15,8 @@ export class SummaryComponent implements OnInit {
   isConfirmed: boolean = false;
 
   constructor(
-    private router: Router,
-    private formDataService: FormDataService
+    private readonly router: Router,
+    private readonly formDataService: FormDataService
   ) {}
 
   ngOnInit(): void {

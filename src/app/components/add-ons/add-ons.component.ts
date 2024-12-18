@@ -36,7 +36,7 @@ export class AddOnsComponent implements OnInit {
     },
   ];
 
-  constructor(private router: Router, private formDataService: FormDataService) {}
+  constructor(private readonly router: Router, private readonly formDataService: FormDataService) {}
 
   ngOnInit(): void {
     const existingFormData = this.formDataService.getFormData();

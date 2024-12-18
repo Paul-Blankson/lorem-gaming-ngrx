@@ -43,9 +43,9 @@ export class YourInfoComponent implements OnInit {
   ];
 
   constructor(
-    private fb: FormBuilder,
-    private router: Router,
-    private formDataService: FormDataService
+    private readonly fb: FormBuilder,
+    private readonly router: Router,
+    private readonly formDataService: FormDataService
   ) {
     const formControls: { [key: string]: FormControl } = {};
     this.fields.forEach((field) => {

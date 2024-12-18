@@ -37,8 +37,8 @@ export class SelectPlanComponent implements OnInit {
   ];
 
   constructor(
-    private router: Router,
-    private formDataService: FormDataService
+    private readonly router: Router,
+    private readonly formDataService: FormDataService
   ) {}
 
   ngOnInit(): void {
