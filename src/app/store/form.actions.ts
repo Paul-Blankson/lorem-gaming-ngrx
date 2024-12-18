@@ -8,5 +8,8 @@ export const FormActions = createActionGroup({
     'Set Select Plan': props<{ selectPlan: SelectPlan }>(),
     'Set Add Ons': props<{ addOns: AddOn[] }>(),
     'Clear Form Data': emptyProps(),
+    'Load Form Data From Storage': emptyProps(),
+    'Form Data Loaded': props<{ formData: Partial<FormData> }>(),
+    'Save Form Data To Storage': emptyProps()
   }
 });
