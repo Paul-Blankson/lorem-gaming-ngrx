@@ -8,5 +8,6 @@ export const FormActions = createActionGroup({
     'Set Select Plan': props<{ selectPlan: SelectPlan }>(),
     'Set Add Ons': props<{ addOns: AddOn[] }>(),
     'Clear Form Data': emptyProps(),
+    'Load Persisted Form Data': props<{ formData: Partial<FormData> }>()
   }
 });
