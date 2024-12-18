@@ -11,8 +11,8 @@ import { FormDataService } from './service/form-data.service';
 export class AppComponent {
   title = 'lorem-gaming';
   constructor(
-    private router: Router,
-    private formDataService: FormDataService
+    private readonly router: Router,
+    private readonly formDataService: FormDataService
   ) {}
 
   ngOnInit(): void {
