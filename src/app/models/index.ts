@@ -16,8 +16,14 @@ interface SelectPlan {
   isYearly: boolean;
 }
 
+interface AddOn {
+  name: string;
+  description: string;
+  price: number;
+}
+
 export interface FormData {
   yourInfo: YourInfo;
   selectPlan: SelectPlan;
-  addOns: string[];
+  addOns: AddOn[];
 }
