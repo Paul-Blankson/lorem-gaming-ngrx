@@ -1,39 +1,65 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { Router } from '@angular/router';
-import { FormDataService } from '../../service/form-data.service';
-import { CurrencyPipe } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { FormActions } from '../../store/form.actions';
+import {
+  selectSelectPlan,
+  selectAddOns,
+  selectYourInfo
+} from '../../store/form.selectors';
+import { Observable, combineLatest, EMPTY } from 'rxjs';
+import { map } from 'rxjs/operators';
+import { AppState, FormData } from '../../models';
+
 @Component({
   selector: 'app-summary',
-  imports: [SidebarComponent, CurrencyPipe],
+  imports: [SidebarComponent, CommonModule, CurrencyPipe],
   templateUrl: './summary.component.html',
   styleUrl: './summary.component.css'
 })
 export class SummaryComponent implements OnInit {
-  formData: any = {};
-  totalPrice: number = 0;
-  isConfirmed: boolean = false;
+  summaryData$: Observable<FormData> = EMPTY;
+  totalPrice$: Observable<number> = EMPTY;
+  isConfirmed = false;
 
   constructor(
     private readonly router: Router,
-    private readonly formDataService: FormDataService
+    private readonly store: Store<AppState>
   ) {}
 
   ngOnInit(): void {
-    this.formData = this.formDataService.getFormData();
-    this.calculateTotalPrice();
-  }
-
-  calculateTotalPrice(): void {
-    const basePrice = this.formData.selectPlan.price;
-    const addOnsPrice = this.formData.addOns.reduce(
-      (acc: number, addOn: any) => acc + (addOn.price || 0),
-      0
+    // Combine data from different selectors
+    this.summaryData$ = combineLatest([
+      this.store.select(selectYourInfo),
+      this.store.select(selectSelectPlan),
+      this.store.select(selectAddOns)
+    ]).pipe(
+      map(([yourInfo, selectPlan, addOns]) => ({
+        yourInfo,
+        selectPlan,
+        addOns
+      }))
     );
-    this.totalPrice = basePrice + addOnsPrice;
+
+    // Calculate total price
+    this.totalPrice$ = combineLatest([
+      this.store.select(selectSelectPlan),
+      this.store.select(selectAddOns)
+    ]).pipe(
+      map(([selectPlan, addOns]) => {
+        const basePrice = selectPlan.price;
+        const addOnsPrice = addOns.reduce(
+          (acc, addOn) => acc + (addOn.price || 0),
+          0
+        );
+        return basePrice + addOnsPrice;
+      })
+    );
   }
 
-  onSelectPlanChange(){
+  onSelectPlanChange(): void {
     this.router.navigate(['/sign-up/select-plan']);
   }
 
@@ -43,7 +69,10 @@ export class SummaryComponent implements OnInit {
 
   confirm(): void {
     this.isConfirmed = true;
-    this.formDataService.clearFormData();
+    // Clear form data in the store
+    this.store.dispatch(FormActions.clearFormData());
+
+    // Navigate back to home after 3 seconds
     setTimeout(() => {
       this.router.navigate(['/']);
     }, 3000);
