@@ -27,3 +27,7 @@ export interface FormData {
   selectPlan: SelectPlan;
   addOns: AddOn[];
 }
+
+export interface AppState {
+  form: FormData;
+}
