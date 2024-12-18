@@ -32,6 +32,10 @@ export const formFeature = createFeature({
       ...state,
       addOns
     })),
+    on(FormActions.loadPersistedFormData, (state, { formData }) => ({
+      ...state,
+      ...formData
+    })),
     on(FormActions.clearFormData, () => initialFormState)
   )
 });
