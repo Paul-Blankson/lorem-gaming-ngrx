@@ -1,70 +1,27 @@
 import { Injectable } from '@angular/core';
-import { FormData } from '../models';
+import { Store } from '@ngrx/store';
+import { StorableValue } from '../models';
+import { localStorageActions } from '../store/form.actions';
 
 @Injectable({
   providedIn: 'root',
 })
-export class FormDataService {
-  private formData: FormData = {
-    yourInfo: {
-      name: '',
-      email: '',
-      phone: '',
-    },
-    selectPlan: {
-      plan: '',
-      price: 0,
-      isYearly: false,
-    },
-    addOns: [],
-  };
+export class LocalStorageService {
+  constructor(private readonly store: Store) {}
 
-  constructor() {
-    this.loadFormDataFromLocalStorage();
+  saveData(key: string, value: StorableValue): void {
+    this.store.dispatch(localStorageActions.saveData({ key, value }));
   }
 
-  private saveFormDataToLocalStorage(): void {
-    localStorage.setItem('formData', JSON.stringify(this.formData));
+  getData(key: string): void {
+    return this.store.dispatch(localStorageActions.getData({ key }));
   }
 
-  private loadFormDataFromLocalStorage(): void {
-    const savedData = localStorage.getItem('formData');
-    if (savedData) {
-      this.formData = JSON.parse(savedData);
-    }
-  }
-
-  getFormData(): FormData {
-    return this.formData;
-  }
-
-  setFormData<K extends keyof FormData>(step: K, data: FormData[K]): void {
-    this.formData[step] = data;
-    this.saveFormDataToLocalStorage();
+  removeData(key: string): void {
+    this.store.dispatch(localStorageActions.removeData({ key }));
   }
 
   clearFormData(): void {
-    this.formData = {
-      yourInfo: {
-        name: '',
-        email: '',
-        phone: '',
-      },
-      selectPlan: {
-        plan: '',
-        price: 0,
-        isYearly: false,
-      },
-      addOns: [],
-    };
-    localStorage.removeItem('formData');
-  }
-  isFormDataEmpty(): boolean {
-    return (
-      !this.formData.yourInfo.name &&
-      !this.formData.yourInfo.email &&
-      !this.formData.yourInfo.phone &&
-      !this.formData.selectPlan.plan
-    );
+    this.store.dispatch(localStorageActions.clearFormData());
   }
 }

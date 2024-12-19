@@ -1,39 +1,113 @@
-import { Component, OnInit } from '@angular/core';
+import { Component, OnInit, OnDestroy } from '@angular/core';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { Router } from '@angular/router';
-import { FormDataService } from '../../service/form-data.service';
-import { CurrencyPipe } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { FormActions } from '../../store/form.actions';
+import {
+  selectSelectPlan,
+  selectAddOns,
+  selectYourInfo,
+  selectStoredValue
+} from '../../store/form.selectors';
+import { Observable, combineLatest, EMPTY, Subject } from 'rxjs';
+import { map, takeUntil, filter } from 'rxjs/operators';
+import { AppState, FormData, YourInfo, SelectPlan, AddOn } from '../../models';
+import { LocalStorageService } from '../../service/form-data.service';
+
 @Component({
   selector: 'app-summary',
-  imports: [SidebarComponent, CurrencyPipe],
+  standalone: true,
+  imports: [SidebarComponent, CommonModule, CurrencyPipe],
   templateUrl: './summary.component.html',
   styleUrl: './summary.component.css'
 })
-export class SummaryComponent implements OnInit {
-  formData: any = {};
-  totalPrice: number = 0;
-  isConfirmed: boolean = false;
+export class SummaryComponent implements OnInit, OnDestroy {
+  summaryData$: Observable<FormData> = EMPTY;
+  totalPrice$: Observable<number> = EMPTY;
+  isConfirmed = false;
+  private readonly destroy$ = new Subject<void>();
 
   constructor(
     private readonly router: Router,
-    private readonly formDataService: FormDataService
+    private readonly store: Store<AppState>,
+    private readonly localStorageService: LocalStorageService
   ) {}
 
   ngOnInit(): void {
-    this.formData = this.formDataService.getFormData();
-    this.calculateTotalPrice();
+    this.loadStoredData();
+    this.initializeObservables();
   }
 
-  calculateTotalPrice(): void {
-    const basePrice = this.formData.selectPlan.price;
-    const addOnsPrice = this.formData.addOns.reduce(
-      (acc: number, addOn: any) => acc + (addOn.price || 0),
-      0
+  private loadStoredData(): void {
+    // Load all required data from localStorage
+    this.localStorageService.getData('yourInfo');
+    this.localStorageService.getData('selectPlan');
+    this.localStorageService.getData('addOns');
+
+    // Subscribe to stored values and dispatch actions if data exists
+    this.store
+      .select(selectStoredValue('yourInfo'))
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((storedData): storedData is YourInfo => storedData !== null)
+      )
+      .subscribe((yourInfo) => {
+        this.store.dispatch(FormActions.setYourInfo({ yourInfo }));
+      });
+
+    this.store
+      .select(selectStoredValue('selectPlan'))
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((storedData): storedData is SelectPlan => storedData !== null)
+      )
+      .subscribe((selectPlan) => {
+        this.store.dispatch(FormActions.setSelectPlan({ selectPlan }));
+      });
+
+    this.store
+      .select(selectStoredValue('addOns'))
+      .pipe(
+        takeUntil(this.destroy$),
+        filter((storedData): storedData is AddOn[] => storedData !== null)
+      )
+      .subscribe((addOns) => {
+        this.store.dispatch(FormActions.setAddOns({ addOns }));
+      });
+  }
+
+  private initializeObservables(): void {
+    // Combine data from different selectors
+    this.summaryData$ = combineLatest([
+      this.store.select(selectYourInfo),
+      this.store.select(selectSelectPlan),
+      this.store.select(selectAddOns)
+    ]).pipe(
+      map(([yourInfo, selectPlan, addOns]) => ({
+        yourInfo,
+        selectPlan,
+        addOns
+      }))
     );
-    this.totalPrice = basePrice + addOnsPrice;
+
+    // Calculate total price
+    this.totalPrice$ = combineLatest([
+      this.store.select(selectSelectPlan),
+      this.store.select(selectAddOns)
+    ]).pipe(
+      map(([selectPlan, addOns]) => {
+        const basePrice = selectPlan?.price || 0;
+        const addOnsPrice = addOns?.reduce(
+          (acc, addOn) => acc + (addOn.price || 0),
+          0
+        ) || 0;
+        return basePrice + addOnsPrice;
+      })
+    );
   }
 
-  onSelectPlanChange(){
+  onSelectPlanChange(): void {
     this.router.navigate(['/sign-up/select-plan']);
   }
 
@@ -43,9 +117,18 @@ export class SummaryComponent implements OnInit {
 
   confirm(): void {
     this.isConfirmed = true;
-    this.formDataService.clearFormData();
+
+    // Clear both store and localStorage
+    this.store.dispatch(FormActions.clearFormData());
+    this.localStorageService.clearFormData();
+
     setTimeout(() => {
       this.router.navigate(['/']);
     }, 3000);
+  }
+
+  ngOnDestroy(): void {
+    this.destroy$.next();
+    this.destroy$.complete();
   }
 }
