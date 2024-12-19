@@ -3,7 +3,10 @@ import { CurrencyPipe } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { FormsModule } from '@angular/forms';
 import { Router } from '@angular/router';
-import { FormDataService } from '../../service/form-data.service';
+import { Store } from '@ngrx/store';
+import { FormActions } from '../../store/form.actions';
+import { selectSelectPlan } from '../../store/form.selectors';
+import { AppState } from '../../models';
 
 @Component({
   selector: 'app-select-plan',
@@ -38,21 +41,16 @@ export class SelectPlanComponent implements OnInit {
 
   constructor(
     private readonly router: Router,
-    private readonly formDataService: FormDataService
+    private readonly store: Store<AppState>,
   ) {}
 
   ngOnInit(): void {
-    const existingFormData = this.formDataService.getFormData();
-
-    if (existingFormData.selectPlan && existingFormData.selectPlan.plan) {
-      this.selectedPlan = existingFormData.selectPlan.plan;
-      this.isYearly = existingFormData.selectPlan.isYearly;
-    } else {
-      // Default to first plan if no existing data
-      this.selectedPlan = this.plans[0].name;
-    }
-
-    this.updateFormData();
+    this.store.select(selectSelectPlan).subscribe(selectPlan => {
+      if (selectPlan) {
+        this.selectedPlan = selectPlan.plan;
+        this.isYearly = selectPlan.isYearly;
+      }
+    });
   }
 
   togglePlan(): void {
@@ -71,13 +69,15 @@ export class SelectPlanComponent implements OnInit {
     );
 
     if (selectedPlanObj) {
-      this.formDataService.setFormData('selectPlan', {
-        plan: this.selectedPlan,
-        price: this.isYearly
-          ? selectedPlanObj.yearlyPrice
-          : selectedPlanObj.monthlyPrice,
-        isYearly: this.isYearly,
-      });
+      this.store.dispatch(FormActions.setSelectPlan({
+        selectPlan: {
+          plan: this.selectedPlan,
+          price: this.isYearly
+            ? selectedPlanObj.yearlyPrice
+            : selectedPlanObj.monthlyPrice,
+          isYearly: this.isYearly,
+        }
+      }));
     }
   }
 

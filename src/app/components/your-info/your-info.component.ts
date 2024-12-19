@@ -9,7 +9,10 @@ import {
 } from '@angular/forms';
 import { CommonModule } from '@angular/common';
 import { Router, RouterModule } from '@angular/router';
-import { FormDataService } from '../../service/form-data.service';
+import { AppState } from '../../models';
+import { Store } from '@ngrx/store';
+import { FormActions } from '../../store/form.actions';
+import { selectYourInfo } from '../../store/form.selectors';
 @Component({
   selector: 'app-your-info',
   imports: [SidebarComponent, ReactiveFormsModule, RouterModule, CommonModule],
@@ -45,7 +48,7 @@ export class YourInfoComponent implements OnInit {
   constructor(
     private readonly fb: FormBuilder,
     private readonly router: Router,
-    private readonly formDataService: FormDataService
+    private readonly store: Store<AppState>
   ) {
     const formControls: { [key: string]: FormControl } = {};
     this.fields.forEach((field) => {
@@ -56,11 +59,12 @@ export class YourInfoComponent implements OnInit {
   }
 
   ngOnInit(): void {
-    // Pre-fill form with existing data
-    const existingFormData = this.formDataService.getFormData();
-    if (existingFormData.yourInfo) {
-      this.yourInfoForm.patchValue(existingFormData.yourInfo);
-    }
+    // Pre-fill form with existing data from store
+    this.store.select(selectYourInfo).subscribe(yourInfo => {
+      if (yourInfo) {
+        this.yourInfoForm.patchValue(yourInfo);
+      }
+    });
   }
 
   nextStep() {
@@ -73,7 +77,10 @@ export class YourInfoComponent implements OnInit {
         this.yourInfoForm.controls[key].markAsTouched();
       });
     } else {
-      this.formDataService.setFormData('yourInfo', this.yourInfoForm.value);
+      // Dispatch action to update store
+      this.store.dispatch(FormActions.setYourInfo({
+        yourInfo: this.yourInfoForm.value
+      }));
       this.nextStep();
     }
   }
