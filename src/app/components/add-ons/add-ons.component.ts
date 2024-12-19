@@ -1,11 +1,15 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule, CurrencyPipe } from '@angular/common';
 import { SidebarComponent } from '../sidebar/sidebar.component';
 import { Router } from '@angular/router';
-import { FormDataService } from '../../service/form-data.service';
-import { CurrencyPipe } from '@angular/common';
+import { Store } from '@ngrx/store';
+import { FormActions } from '../../store/form.actions';
+import { selectSelectPlan, selectAddOns } from '../../store/form.selectors';
+import { AppState } from '../../models';
+
 @Component({
   selector: 'app-add-ons',
-  imports: [SidebarComponent, CurrencyPipe],
+  imports: [SidebarComponent, CommonModule, CurrencyPipe],
   templateUrl: './add-ons.component.html',
   styleUrl: './add-ons.component.css'
 })
@@ -36,38 +40,56 @@ export class AddOnsComponent implements OnInit {
     },
   ];
 
-  constructor(private readonly router: Router, private readonly formDataService: FormDataService) {}
+  constructor(
+    private readonly router: Router,
+    private readonly store: Store<AppState>
+  ) {}
 
   ngOnInit(): void {
-    const existingFormData = this.formDataService.getFormData();
-    this.isYearly = existingFormData.selectPlan.isYearly;
+    this.store.select(selectSelectPlan).subscribe(selectPlan => {
+      this.isYearly = selectPlan?.isYearly ?? false;
+    });
 
-    if (existingFormData.addOns && existingFormData.addOns.length) {
-      // Restore selected add-ons
-      this.addOns = this.addOns.map(addOn => {
-        const savedAddOn = existingFormData.addOns.find((saved: any) => saved.name === addOn.name);
-        return savedAddOn
-          ? { ...addOn, isSelected: true }
-          : addOn;
-      });
-    }
+    // Restore selected add-ons from store
+    this.store.select(selectAddOns).subscribe(storeAddOns => {
+      if (storeAddOns?.length) {
+        this.addOns = this.addOns.map(addOn => {
+          const savedAddOn = storeAddOns.find(saved => saved.name === addOn.name);
+          return savedAddOn
+            ? { ...addOn, isSelected: true }
+            : addOn;
+        });
+      }
+    });
+  }
+
+  getAddOnPrice(addOnName: string): number {
+    const priceMap: Record<string, { monthly: number; yearly: number }> = {
+      'Online service': { monthly: 1, yearly: 10 },
+      'Larger storage': { monthly: 2, yearly: 20 },
+      'Customizable Profile': { monthly: 2, yearly: 20 }
+    };
+
+    const addOnPrices = priceMap[addOnName] ?? { monthly: 0, yearly: 0 };
+    return this.isYearly ? addOnPrices.yearly : addOnPrices.monthly;
   }
 
   toggleAddOn(index: number): void {
-    this.addOns[index].isSelected = !this.addOns[index].isSelected;
-    this.updateFormData();
-  }
+    const updatedAddOns = this.addOns.map((addOn, i) =>
+      i === index ? { ...addOn, isSelected: !addOn.isSelected } : addOn
+    );
 
-  updateFormData(): void {
-    const selectedAddOns = this.addOns
+    this.addOns = updatedAddOns;
+
+    const selectedAddOns = updatedAddOns
       .filter(addOn => addOn.isSelected)
       .map(addOn => ({
         name: addOn.name,
         description: addOn.description,
-        price: this.isYearly ? addOn.yearlyPrice : addOn.monthlyPrice
+        price: this.getAddOnPrice(addOn.name)
       }));
 
-    this.formDataService.setFormData('addOns', selectedAddOns);
+    this.store.dispatch(FormActions.setAddOns({ addOns: selectedAddOns }));
   }
 
   goBack(): void {
@@ -75,7 +97,6 @@ export class AddOnsComponent implements OnInit {
   }
 
   nextStep(): void {
-    this.updateFormData();
     this.router.navigate(['/sign-up/summary']);
   }
 }
