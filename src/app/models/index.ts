@@ -30,4 +30,11 @@ export interface FormData {
 
 export interface AppState {
   form: FormData;
+  localStorage: LocalStorageState;
+}
+
+export type StorableValue = string | number | boolean | YourInfo | SelectPlan | AddOn[] | null | undefined;
+
+export interface LocalStorageState {
+  [key: string]: StorableValue;
 }
