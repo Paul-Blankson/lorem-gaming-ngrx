@@ -1,7 +1,5 @@
 import { Component } from '@angular/core';
-import { RouterOutlet, RouterModule, Router } from '@angular/router';
-import { FormDataService } from './service/form-data.service';
-
+import { RouterOutlet, RouterModule } from '@angular/router';
 @Component({
   selector: 'app-root',
   imports: [RouterOutlet, RouterModule],
@@ -10,14 +8,4 @@ import { FormDataService } from './service/form-data.service';
 })
 export class AppComponent {
   title = 'lorem-gaming';
-  constructor(
-    private readonly router: Router,
-    private readonly formDataService: FormDataService
-  ) {}
-
-  ngOnInit(): void {
-    if (!this.formDataService.isFormDataEmpty()) {
-      this.router.navigate(['/sign-up/your-info']);
-    }
-  }
 }
